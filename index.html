@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator-RevoU Day2</title>
+  </head>
+  <style>
+    button {
+      width: 100%;
+    }
+  </style>
+  <body>
+    <table>
+      <tr>
+        <th colspan="4"><input type="text" id="display" /></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <td colspan="2"><button onclick="clearDisplay()">AC</button></td>
+        <td><button onclick="C()">C</button></td>
+        <td><button onclick="operator('*')">*</button></td>
+      </tr>
+      <tr>
+        <td><button onclick="addNumber('7')">7</button></td>
+        <td><button onclick="addNumber('8')">8</button></td>
+        <td><button onclick="addNumber('9')">9</button></td>
+        <td><button onclick="operator('/')">/</button></td>
+      </tr>
+      <tr>
+        <td><button onclick="addNumber('4')">4</button></td>
+        <td><button onclick="addNumber('5')">5</button></td>
+        <td><button onclick="addNumber('6')">6</button></td>
+        <td><button onclick="operator('+')">+</button></td>
+      </tr>
+      <tr>
+        <td><button onclick="addNumber('1')">1</button></td>
+        <td><button onclick="addNumber('2')">2</button></td>
+        <td><button onclick="addNumber('3')">3</button></td>
+        <td><button onclick="operator('-')">-</button></td>
+      </tr>
+      <tr>
+        <td><button onclick="minus()">+-</button></td>
+        <td><button onclick="addNumber('0')">0</button></td>
+        <td><button onclick="addNumber('.')">.</button></td>
+        <td><button onclick="calculate();">=</button></td>
+      </tr>
+    </table>
+
+    <script>
+      let display = document.getElementById("display");
+      let number1 = "";
+      let number2 = "";
+      let result;
+      let opr = null;
+
+      function addNumber(number) {
+        if (number === ".") {
+          if (!display.value.includes(".")) {
+            display.value =
+              display.value.slice(0, display.selectionStart) +
+              number +
+              display.value.slice(display.selectionStart);
+          }
+        } else {
+          display.value =
+            display.value.slice(0, display.selectionStart) +
+            number +
+            display.value.slice(display.selectionStart);
+        }
+        display.selectionStart = cursorPosition + 1;
+        display.selectionEnd = cursorPosition + 1;
+      }
+      function operator(op) {
+        number1 = parseFloat(display.value);
+        opr = op;
+        display.value = "";
+      }
+      function C() {
+        display.value = "";
+      }
+      function minus() {
+        number1 = parseFloat(display.value);
+        number1 *= -1;
+        display.value = number1;
+      }
+      function clearDisplay() {
+        number1 = "";
+        number2 = "";
+        result;
+        display.value = "";
+        opr = null;
+      }
+      function calculate() {
+        number2 = parseFloat(display.value);
+
+        switch (opr) {
+          case "+":
+            result = number1 + number2;
+            break;
+          case "*":
+            result = number1 * number2;
+            break;
+          case "-":
+            result = number1 - number2;
+            break;
+          case "/":
+            number2 === 0
+              ? (result = "undefined")
+              : (result = number1 / number2);
+            break;
+
+          default:
+            break;
+        }
+        display.value = result;
+      }
+    </script>
+  </body>
+</html>
